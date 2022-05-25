@@ -1,42 +1,40 @@
 package aps.main.model.chat;
 
-import aps.main.model.chat.enuns.MessageState;
 
-import javax.annotation.processing.Generated;
 import java.time.LocalDateTime;
-
-import static aps.main.model.chat.enuns.MessageState.*;
-
+import java.util.Objects;
 public class MessageModel {
 
-
-    private Long id;
-    private String username;
+    private int id;
+    private String from;
+    private String to;
     private String content;
-    private MessageState state;
-    private LocalDateTime sendedAt;
-    private LocalDateTime receivedAt;
-    private LocalDateTime cancellatedAt;
-    private LocalDateTime deletedAt;
-    private LocalDateTime viewedAt;
+    private LocalDateTime sendAt;
 
-    private boolean direction;
-
-    public Long id() {
+    public int id() {
         return id;
     }
 
-    public MessageModel setId(Long id) {
+    public MessageModel setId(int id) {
         this.id = id;
         return this;
     }
 
-    public String username() {
-        return username;
+    public String from() {
+        return from;
     }
 
-    public MessageModel setUsername(String username) {
-        this.username = username;
+    public MessageModel setFrom(String from) {
+        this.from = from;
+        return this;
+    }
+
+    public String to() {
+        return to;
+    }
+
+    public MessageModel setTo(String to) {
+        this.to = to;
         return this;
     }
 
@@ -49,92 +47,45 @@ public class MessageModel {
         return this;
     }
 
-    public MessageState state() {
-        return state;
+    public LocalDateTime sendAt() {
+        return sendAt;
     }
 
-    public MessageModel setState(MessageState state) {
-        this.state = state;
+    public MessageModel setSendAt(LocalDateTime sendAt) {
+        this.sendAt = sendAt;
         return this;
     }
 
-    public LocalDateTime sendedAt() {
-        return sendedAt;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof MessageModel)) return false;
+        MessageModel that = (MessageModel) o;
+        return id == that.id;
     }
 
-    public MessageModel setSendedAt(LocalDateTime sendedAt) {
-        this.sendedAt = sendedAt;
-        return this;
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 
-    public LocalDateTime receivedAt() {
-        return receivedAt;
+    public void setSendedAt(LocalDateTime now) {
+        this.sendAt = now;
     }
 
-    public MessageModel setReceivedAt(LocalDateTime receivedAt) {
-        this.receivedAt = receivedAt;
-        return this;
+
+    public boolean direction(String email) {
+    return Objects.equals(this.from, email);
     }
 
-    public LocalDateTime cancellatedAt() {
-        return cancellatedAt;
+    @Override
+    public String toString() {
+        return "MessageModel{" +
+                "id=" + id +
+                ", from='" + from + '\'' +
+                ", to='" + to + '\'' +
+                ", content='" + content + '\'' +
+                ", sendAt=" + sendAt +
+                '}';
     }
-
-    public MessageModel setCancellatedAt(LocalDateTime cancellatedAt) {
-        this.cancellatedAt = cancellatedAt;
-        return this;
-    }
-
-    public LocalDateTime deletedAt() {
-        return deletedAt;
-    }
-
-    public MessageModel setDeletedAt(LocalDateTime deletedAt) {
-        this.deletedAt = deletedAt;
-        return this;
-    }
-
-    public LocalDateTime viewedAt() {
-        return viewedAt;
-    }
-
-    public MessageModel setViewedAt(LocalDateTime viewedAt) {
-        this.viewedAt = viewedAt;
-        return this;
-    }
-
-    public boolean direction() {
-        return direction;
-    }
-
-    public MessageModel setDirection(boolean direction) {
-        this.direction = direction;
-        return this;
-    }
-
-    //process state
-    public void procesState(){
-       MessageState state = this.state;
-
-       //se enviada
-            if (this.sendedAt != null){
-                state = SENDED;
-            }
-            // serecebido
-            else if(this.receivedAt != null){
-                state = RECEIVED;
-            }
-            // se visualizado
-            else if(this.viewedAt != null){
-                state = VIEWED;
-            } else if(this.cancellatedAt != null){
-                state = CANCELLED;
-            }else if(this.deletedAt != null){
-                state = DELETED;
-            }
-        }
-
-        public void prosseMessagem(){
-            procesState();
-        }
 }
